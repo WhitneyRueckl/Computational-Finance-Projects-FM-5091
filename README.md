@@ -1,5 +1,8 @@
 # WR-Repo-5091
 Repo for 5091 Python and C# projects
+
+** Note for  project 6 (random number generator), code to be graded resides in 'Program.cs' file. ***
+
 FM 5091 Project 1: Implement Black-Scholes model using lambda functions (python)
 FM 5091 Project 2: Binimial Tree Implementation (python)
 FM 5091 Project 3: Implied Volatility Calculator (python)
