@@ -4,6 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+
+// Files SDE.cs and PriceCalculator.cs are needed for this program. The following three scripts posted comprise this prject: TrinomialPricingProgram.cs, SDE.cs, and PriceCalculator.cs
 namespace Trinomial_Tree_Pricing_Model
 {
     class TrinomialPricingProgram
@@ -190,65 +192,46 @@ namespace Trinomial_Tree_Pricing_Model
             Console.Write("  Theta: ");
             Console.WriteLine(theta);
 
+             /*
+            SDE sde_v = new SDE();
+
+            double pu_v_plus = sde_v.calcProbabilityUp(r, t, q, n_steps, sigma + .0001, delta_x, v);
+            double pd_v_plus = sde_v.calcProbabilityDown(r, t, q, n_steps, sigma + .0001, delta_x, v);
+
+            double pu_v_minus = sde_v.calcProbabilityUp(r, t, q, n, sigma - .0001, delta_x, v);
+            double pd_v_minus = sde_v.calcProbabilityDown(r, t, q, n, sigma - .0001, delta_x, v);
+
+            double[,] optionprice_sigplus = pricer.calcOptionPrices(stockvalue, K, disc, pu_v_plus, pd_v_plus, pm, n_steps, put_call, option_type);
+
+            double[,] optionprice_sigminus = pricer.calcOptionPrices(stockvalue, K, disc, pu_v_minus, pd_v_minus, pm, n_steps, put_call, option_type);
+
+            double veg = (optionprice_sigplus[0, 0] - optionprice_sigminus[0, 0])/(2 * .0001);
+
+            Console.Write("  Vega =  ");
+            Console.WriteLine(veg);
 
 
-            // =================== END SCRIPT FOR PROJECT ==========================
+            double pu_r_plus = sde_v.calcProbabilityUp(r + .0001, t, q, n_steps, sigma, delta_x, v);
+            double pd_r_plus = sde_v.calcProbabilityDown(r - .0001, t, q, n_steps, sigma, delta_x, v);
 
+            double pu_r_minus = sde_v.calcProbabilityUp(r - .0001, t, q, n, sigma, delta_x, v);
+            double pd_r_minus = sde_v.calcProbabilityDown(r + .0001, t, q, n, sigma, delta_x, v);
 
+            double[,] optionprice_sigplusr = pricer.calcOptionPrices(stockvalue, K, disc, pu_v_plus, pd_v_plus, pm, n_steps, put_call, option_type);
 
+            double[,] optionprice_sigminusr = pricer.calcOptionPrices(stockvalue, K, disc, pu_r_minus, pd_r_minus, pm, n_steps, put_call, option_type);
 
+            double rho = (optionprice_sigplusr[0, 0] - optionprice_sigminusr[0, 0]) / (2 * .0001);
 
+            Console.Write("  Rho =  ");
+            Console.WriteLine(rho);
 
+            */
+            
+            
+            
 
-
-
-
-            //Console.Write(" ====== European Option Price & Greeks - Put ====== ");
-            //optionprice = pricer.calcOptionPrices(stockvalue, payoff, K, disc, pu, pd, pm, n_steps, "put", 0);
-
-
-
-
-
-            //Console.WriteLine("  Troubleshooting: ");
-
-            //double[,] option_px = new double[2 * n_steps + 1, n_steps + 1];
-
-            // option_px = payoff;
-            // double[,] asset_px = stockvalue;
-
-            /* for (int i = n_steps; i > 0; i--)
-             {
-                 for (int j = 0; j < 2 * i - 1; j++)
-                 {
-                     Console.WriteLine("j , i:" + j + "," + i);
-                     Console.ReadLine();
-
-                     // for european option:
-                    // option_px[j, i - 1] = disc * (pu * option_px[j, i] + pm * option_px[j + 1, i] + pd * option_px[j + 2, i]);
-
-
-                     //Console.WriteLine("[j, i - 1]:" + j + "," + i);
-                    // Console.WriteLine("option_px[j, i - 1]:" + option_px[j, i - 1]);
-
-
-                 }
-
-             }   */
+            // ====================== END SCRIPT FOR PROJECT ==========================
 
 
 
-
-
-
-
-            //Console.WriteLine(String.Join(" ", option_px.Cast<double>()));
-
-
-            // Hold the console window in view
-            Console.WriteLine("Press Enter to exit:");
-            Console.ReadLine();
-
-        }
-    }
-}
