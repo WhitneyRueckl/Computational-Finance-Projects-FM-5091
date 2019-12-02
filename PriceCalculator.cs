@@ -8,12 +8,14 @@ namespace Trinomial_Tree_Pricing_Model
 {
     class PriceCalculator
     {
-        // The class PriceCalculator contains the following methods:
+        // This class contains the following methods:
         // 1. calcAssetPrice
-        // 2. calcTrionmialPrices (just binomial right now)
-        // 3. calcD1 and calc D2
-        // 4. calcCallPayoff and calcPutPayoff
-        // 5. calc___ --> greeks for option
+        // 2. calcPayoff
+        // 3. calcOptionPrices
+        // 4. calcDelta
+        // 5. calcGamma
+        // 6. calcTheta
+
 
 
         public double[,] calcAssetPrice(double S, double u, double d, int n_steps)
