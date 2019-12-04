@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Trinomial_Tree_Pricing_Model
 {
@@ -15,7 +11,6 @@ namespace Trinomial_Tree_Pricing_Model
         // 4. calcDelta
         // 5. calcGamma
         // 6. calcTheta
-
 
 
         public double[,] calcAssetPrice(double S, double u, double d, int n_steps)
@@ -70,7 +65,7 @@ namespace Trinomial_Tree_Pricing_Model
                // Console.WriteLine("j = " + j);
                // Console.ReadLine();
 
-                Console.WriteLine("stockvalue[j, n_steps] = " + stockvalue[j, n_steps]);
+                //Console.WriteLine("stockvalue[j, n_steps] = " + stockvalue[j, n_steps]);
 
                 payoff[j, n_steps] = Math.Max(0, stockvalue[j, n_steps] - K);
 
@@ -187,7 +182,7 @@ namespace Trinomial_Tree_Pricing_Model
         public double calcDelta(double[,] option_px, double[,] asset_px)
         {
 
-            double delta = (option_px[0, 1] - option_px[1, 1]) / (asset_px[0, 1] - asset_px[2, 1]);
+            double delta = (option_px[0, 1] - option_px[2, 1]) / (asset_px[0, 1] - asset_px[2, 1]);
 
             return delta;
 
@@ -219,6 +214,23 @@ namespace Trinomial_Tree_Pricing_Model
 
 
         }
+        /*
+        public double calcVega(double r, double t, double q, double n, double sigma, double x, double v)
+        {
+
+            SDE sde_v = new SDE();
+
+            double up_sig_prob = sde_v.calcProbabilityUp(r, t, q, n, sigma + .00001, x, v);
+            double down_sig_prob = sde_v.calcProbabilityUp(r, t, q, n, sigma - .00001, x, v);
+
+
+
+            //double vega = calcOptionPrices();
+
+
+            //return vega;
+        }
+        */
 
     }
 

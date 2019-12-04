@@ -1,11 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 
-// Files SDE.cs and PriceCalculator.cs are needed for this program. The following three scripts posted comprise this prject: TrinomialPricingProgram.cs, SDE.cs, and PriceCalculator.cs
+
 namespace Trinomial_Tree_Pricing_Model
 {
     class TrinomialPricingProgram
@@ -52,7 +48,7 @@ namespace Trinomial_Tree_Pricing_Model
             double put_call_type = Convert.ToDouble(Console.ReadLine());
 
 
-            Console.Write("Enter option type, enter 0 for 'american' or  1 for 'european' option = ");
+            Console.Write("Enter option type, enter 0 for 'european' or  1 for 'american' option = ");
             double o_type = Convert.ToDouble(Console.ReadLine());
 
             
@@ -192,7 +188,8 @@ namespace Trinomial_Tree_Pricing_Model
             Console.Write("  Theta: ");
             Console.WriteLine(theta);
 
-             /*
+
+            /*
             SDE sde_v = new SDE();
 
             double pu_v_plus = sde_v.calcProbabilityUp(r, t, q, n_steps, sigma + .0001, delta_x, v);
@@ -227,11 +224,66 @@ namespace Trinomial_Tree_Pricing_Model
             Console.WriteLine(rho);
 
             */
-            
-            
-            
-
-            // ====================== END SCRIPT FOR PROJECT ==========================
 
 
 
+            // =================== END SCRIPT FOR PROJECT ==========================
+
+
+
+
+
+
+
+
+
+
+            //Console.Write(" ====== European Option Price & Greeks - Put ====== ");
+            //optionprice = pricer.calcOptionPrices(stockvalue, payoff, K, disc, pu, pd, pm, n_steps, "put", 0);
+
+
+
+
+
+            //Console.WriteLine("  Troubleshooting: ");
+
+            //double[,] option_px = new double[2 * n_steps + 1, n_steps + 1];
+
+            // option_px = payoff;
+            // double[,] asset_px = stockvalue;
+
+            /* for (int i = n_steps; i > 0; i--)
+             {
+                 for (int j = 0; j < 2 * i - 1; j++)
+                 {
+                     Console.WriteLine("j , i:" + j + "," + i);
+                     Console.ReadLine();
+
+                     // for european option:
+                    // option_px[j, i - 1] = disc * (pu * option_px[j, i] + pm * option_px[j + 1, i] + pd * option_px[j + 2, i]);
+
+
+                     //Console.WriteLine("[j, i - 1]:" + j + "," + i);
+                    // Console.WriteLine("option_px[j, i - 1]:" + option_px[j, i - 1]);
+
+
+                 }
+
+             }   */
+
+
+
+
+
+
+
+            //Console.WriteLine(String.Join(" ", option_px.Cast<double>()));
+
+
+            // Hold the console window in view
+            Console.WriteLine("Press Enter to exit:");
+            Console.ReadLine();
+
+        }
+    }
+}
