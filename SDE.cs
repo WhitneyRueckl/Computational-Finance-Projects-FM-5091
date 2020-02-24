@@ -4,129 +4,56 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Trinomial_Tree_Pricing_Model
+namespace Monte_Carlo_Pricer
 {
-    class SDE
+    public class SDE
     {
-
-
-        public double calcProbabilityUp(double r, double t, double q, double n, double sigma, double x, double v)
+        public double GBM(double delta_t, double drift, double vol, double randnum)
         {
 
-            double p, delta_t, delta_x;
-            delta_t = t;
-            delta_x = x;
+            double nextPriceMultiplier = Math.Exp((drift - Math.Pow(vol, 2) / 2) * delta_t + vol * Math.Sqrt(delta_t) * randnum);
 
-
-            //v = calcV(r, q, sigma);
-
-            //double a = (Math.Pow(sigma, 2) * delta_t + Math.Pow(v, 2) * Math.Pow(delta_t, 2)) / (Math.Pow(delta_x, 2));
-           // double b = (v * delta_t) / delta_x;
-
-            p = 0.5 * ((Math.Pow(sigma, 2) * delta_t + Math.Pow(v, 2) * Math.Pow(delta_t, 2)) / (Math.Pow(delta_x, 2)) - (v * delta_t)/delta_x) ;
-
-            //p = 0.5 * (a + b);
-
-            return p;
-
-
-        }
-
-        public double calcProbabilityDown(double r, double t, double q, double n, double sigma, double x, double v)
-        {
-
-            double p, delta_t, delta_x;
-            delta_t = t;
-            delta_x = x;
-
-
-            //v = calcV(r, q, sigma);
-
-
-            p = 0.5 * ((Math.Pow(sigma, 2) * delta_t + Math.Pow(v, 2) * Math.Pow(delta_t, 2)) / (Math.Pow(delta_x, 2)) + (v * delta_t) / delta_x);
-
-
-            return p;
-
+            return nextPriceMultiplier;
 
         }
 
 
-        private double calcV(double r, double q, double sigma)
+        // method to calc standard error
+        public double calcStandardError(double[] prices, int trials)
         {
 
-            double v = r - q - 0.5 * sigma;
+            double std_err_result;
+            double sum_prices = 0;
+            double sum_dev = 0;
+            double avg_prices = 0;
+            double avg_dev = 0;
 
-            return v;
+            // sum of simulated prices
+            for (long i = 0; i < trials; i++)
+            {
+                sum_prices += prices[i];
 
-        }
+            }
 
-        public double calcUpTick(double sigma, double t, double x, double n)
-        {
+            avg_prices = sum_prices / trials;
 
-            // calulate edx:
+            // calc std deviation
+            for (long i = 0; i < trials; i++)
+            {
+                sum_dev += Math.Pow((prices[i] - avg_prices), 2);
 
-            double delta_t, delta_x;
-            delta_t = t;
-            delta_x = x;
+            }
 
+            // calc average deviation
+            avg_dev = Math.Sqrt(sum_dev / (trials - 1));
 
-            double edx  = Math.Pow(Math.E, delta_x);
+            // std error
+            std_err_result = avg_dev / Math.Sqrt(trials);
 
-            return edx;
-
-
-        }
-
-        public double calcDownTick(double sigma, double t, double x, double n)
-        {
-            // calulate down tick ---> 1/edx:
-
-            double delta_t, delta_x;
-            delta_t = t;
-            delta_x = x;
-
-
-            double recip_edx = 1/(Math.Pow(Math.E, delta_x));
-
-
-            return recip_edx;
+            return std_err_result;
 
 
         }
-
-
-
-        
-        public double calcDiscountFactor(double r, double t)
-        {
-            double d = Math.Exp(-1.0 * r * t);
-
-            return d;
-
-        }
-
-
-
-
-        /*
-           public double calcProbability(double r, double T, double q, double n, double u, double d)
-        {
-
-            double p, t;
-            t = T / n;
-
-            //TrinomialTree prob_down = new TrinomialTree();
-            //double u = calcUpTick()
-            p = (Math.Exp((r - q) * t) - d) / (u - d);
-
-            return p;
-
-
-        }
-         
-    */
-
 
 
     }
