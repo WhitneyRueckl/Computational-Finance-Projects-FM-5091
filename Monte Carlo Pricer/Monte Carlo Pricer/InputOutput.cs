@@ -21,6 +21,7 @@ namespace Monte_Carlo_Pricer
         private static int optiontype;
         private static int trials;
         private static int n_steps;
+        private static bool var_reduc;
 
         //Outputs
         private static double o_price;
@@ -32,12 +33,13 @@ namespace Monte_Carlo_Pricer
         private static double o_rho;
         private static int o_steps;
         private static int o_trials;
-        private static int var_reduc;
+        
 
 
         // Properties of input/output
        public static int Trials { get => trials; set => trials = value; }
        public static int N_Steps { get => n_steps; set => n_steps = value; }
+       public static bool Var_Reduc { get => var_reduc; set => var_reduc = value; }
        public static int PutCall { get => putcall; set => putcall = value; }
        public static double SpotPrice { get => spot; set => spot = value; }
        public static double StrikePrice { get => strike; set => strike = value; }
@@ -64,7 +66,10 @@ namespace Monte_Carlo_Pricer
 
 
         public static double[] optionPrices = new double[trials + 1];
+        public static double[] negCorr_OptionPrices = new double[trials + 1];
+
         public static double[,] randoms = new double[Trials, N_Steps + 1];
+        public static double[,] neg_randoms = new double[Trials, N_Steps + 1];
 
 
 
@@ -80,16 +85,47 @@ namespace Monte_Carlo_Pricer
             //Save random number matrix for greek calculations
             InputOutput.randoms = sim.getRandomMatrix();
 
-            InputOutput.optionPrices = sim.calcSimPrices(SpotPrice, StrikePrice, Rate, Tenor, Drift, Vol, Trials, N_Steps, PutCall, randoms);
+            if(InputOutput.Var_Reduc == true)
+            {
 
-            InputOutput.O_Price = sim.calcAverage(optionPrices, Trials);
+                // constructor call that create neg randoms and popukated IO.negRandoms
+                // RandomGenerator.createNegRandoms();
 
-            InputOutput.O_Delta = opt.calcDelta(randoms);
-            InputOutput.O_Gamma = opt.calcGamma(randoms);
-            InputOutput.O_Theta = opt.calcTheta(randoms);
-            InputOutput.O_Vega = opt.calcVega(randoms);
-            InputOutput.O_Rho = opt.calcRho(randoms);
-            InputOutput.O_StdErr = sde.calcStandardError(optionPrices, Trials);
+                InputOutput.neg_randoms = RandomGenerator.createNegRandoms(InputOutput.randoms);
+
+                
+                InputOutput.optionPrices = sim.calcSimPrices(SpotPrice, StrikePrice, Rate, Tenor, Drift, Vol, Trials, N_Steps, PutCall, randoms);
+                InputOutput.negCorr_OptionPrices = sim.calcSimPrices(SpotPrice, StrikePrice, Rate, Tenor, Drift, Vol, Trials, N_Steps, PutCall, neg_randoms);
+
+                double avgPrices = sim.calcAverage(optionPrices, Trials);
+                double negCorr_avgPrices = sim.calcAverage(negCorr_OptionPrices, Trials);
+
+                InputOutput.O_Price = 0.5 * (avgPrices + negCorr_avgPrices);
+
+
+            }
+            else
+            {
+
+
+                InputOutput.optionPrices = sim.calcSimPrices(SpotPrice, StrikePrice, Rate, Tenor, Drift, Vol, Trials, N_Steps, PutCall, randoms);
+
+                InputOutput.O_Price = sim.calcAverage(optionPrices, Trials);
+
+            }
+           
+
+            
+
+            // Calc greeks:
+            InputOutput.O_Delta = opt.calcDelta(randoms, neg_randoms);
+            InputOutput.O_Gamma = opt.calcGamma(randoms, neg_randoms);
+            InputOutput.O_Theta = opt.calcTheta(randoms, neg_randoms);
+            InputOutput.O_Vega = opt.calcVega(randoms, neg_randoms);
+            InputOutput.O_Rho = opt.calcRho(randoms, neg_randoms);
+
+            // Calc std error:
+            InputOutput.O_StdErr = sde.calcStandardError(optionPrices, negCorr_OptionPrices, Trials);
 
 
 

@@ -15,14 +15,15 @@ namespace Monte_Carlo_Pricer
 
         public double[,] getRandomMatrix()
         {
-
-            RandomGenerator rnd = new RandomGenerator();
-            double[,] rand = new double[InputOutput.N_Steps, InputOutput.N_Steps];
-            rand = rnd.createRandoms();
+           
+                RandomGenerator rnd = new RandomGenerator();
+                double[,] rand = new double[InputOutput.Trials, InputOutput.N_Steps];
+                rand = rnd.createRandoms();
 
             return rand;
 
         } 
+
 
 
         public double[] calcSimPrices(double S, double K, double r, double T, double drift, double vol, int trials, int n_steps, int put_call, double[,] rand)

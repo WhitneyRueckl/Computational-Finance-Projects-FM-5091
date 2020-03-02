@@ -23,9 +23,10 @@ namespace Monte_Carlo_Pricer
             textBox_Volatility.Text = "0.50";
             textBox_Drift.Text = "0.05";
             textBox_Steps.Text = "2";
-            textBox_Trials.Text = "100000";
+            textBox_Trials.Text = "10000";
 
             radioButton_Call.Checked = true;
+            checkBox_VarReduc.Checked = true;
         }
 
 
@@ -58,7 +59,7 @@ namespace Monte_Carlo_Pricer
             InputOutput.Trials = Convert.ToInt32(textBox_Trials.Text);
 
 
-
+           // Determine if put or call 
             if (radioButton_Call.Checked)
             {
 
@@ -68,6 +69,19 @@ namespace Monte_Carlo_Pricer
             else if (radioButton_Put.Checked)
             {
                 InputOutput.PutCall = 1;
+
+            }
+
+            // Determine if varaiance reduction is requested and assign bool to Var_Reduc
+            if (checkBox_VarReduc.Checked)
+            {
+
+                InputOutput.Var_Reduc = true;
+
+            }
+            else if (checkBox_VarReduc.Checked)
+            {
+                InputOutput.Var_Reduc = false;
 
             }
 
@@ -87,7 +101,24 @@ namespace Monte_Carlo_Pricer
 
         }
 
+        private void checkBox_VarReduc_CheckedChanged(object sender, EventArgs e)
+        {
 
+            if (checkBox_VarReduc.Checked)
+            {
+
+                InputOutput.Var_Reduc = true;
+
+            }
+            else if (checkBox_VarReduc.Checked)
+            {
+                InputOutput.Var_Reduc = false;
+
+            }
+
+
+
+        }
     }
 
 }

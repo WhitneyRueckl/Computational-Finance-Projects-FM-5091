@@ -15,7 +15,8 @@ namespace Monte_Carlo_Pricer
         
         static int trials = InputOutput.Trials;
         static int steps = InputOutput.N_Steps;
-        double[,] randnums = new double[trials, steps];
+        double[,] randnums = new double[trials + 1, steps + 1];
+       // double[,] neg_randnums = new double[trials + 1, steps + 1];
 
 
         // Create matrix of random numbers:
@@ -52,6 +53,54 @@ namespace Monte_Carlo_Pricer
             return z1;
 
         }
+
+
+     
+        public static double[,] createNegRandoms(double[,] rand_matrix)
+        {
+            double[,] neg_matrix = new double[InputOutput.Trials, InputOutput.N_Steps + 1];
+
+            for (long i = 0; i < InputOutput.Trials; i++)
+            {
+                for (long j = 0; j < InputOutput.N_Steps; j++)
+                {
+                    //Console.WriteLine("random num " + IO.randoms[i, j]);
+
+                    //InputOutput.neg_randoms[i, j] = InputOutput.randoms[i, j] * -1;
+
+                    neg_matrix[i, j] = rand_matrix[i, j] * -1;
+
+                    //Console.WriteLine("Neg randoms: " + IO.neg_randoms[i, j]);
+
+                }
+            }
+
+            return neg_matrix;
+
+        }
+
+
+        /*
+       public static void createNegRandoms()
+       {
+
+           for (long i = 0; i < trials; i++)
+           {
+               for (long j = 0; j < steps; j++)
+               {
+                   //Console.WriteLine("random num " + IO.randoms[i, j]);
+
+                   InputOutput.neg_randoms[i, j] = InputOutput.randoms[i, j] * -1;
+
+                   //Console.WriteLine("Neg randoms: " + IO.neg_randoms[i, j]);
+
+               }
+           }
+
+       }
+
+       */
+
 
     }
 }
