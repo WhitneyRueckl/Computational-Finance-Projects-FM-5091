@@ -49,6 +49,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ControlVariate.cs" />
+    <Compile Include="ControlVariate_temp.cs" />
     <Compile Include="Derivative.cs" />
     <Compile Include="European.cs" />
     <Compile Include="FinancialInstrument.cs" />
@@ -59,6 +61,7 @@
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
     <Compile Include="InputOutput.cs" />
+    <Compile Include="NormalDist.cs" />
     <Compile Include="Option.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

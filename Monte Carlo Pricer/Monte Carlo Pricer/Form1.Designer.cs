@@ -68,6 +68,7 @@
             this.textBox_Rho = new System.Windows.Forms.TextBox();
             this.checkBox_VarReduc = new System.Windows.Forms.CheckBox();
             this.label4 = new System.Windows.Forms.Label();
+            this.checkBox_CV_VarReduc = new System.Windows.Forms.CheckBox();
             this.SuspendLayout();
             // 
             // textBox_Spot
@@ -480,12 +481,24 @@
             this.label4.Size = new System.Drawing.Size(0, 29);
             this.label4.TabIndex = 40;
             // 
+            // checkBox_CV_VarReduc
+            // 
+            this.checkBox_CV_VarReduc.AutoSize = true;
+            this.checkBox_CV_VarReduc.Location = new System.Drawing.Point(279, 706);
+            this.checkBox_CV_VarReduc.Name = "checkBox_CV_VarReduc";
+            this.checkBox_CV_VarReduc.Size = new System.Drawing.Size(141, 24);
+            this.checkBox_CV_VarReduc.TabIndex = 41;
+            this.checkBox_CV_VarReduc.Text = "Control Variate";
+            this.checkBox_CV_VarReduc.UseVisualStyleBackColor = true;
+            this.checkBox_CV_VarReduc.CheckedChanged += new System.EventHandler(this.checkBox_CV_VarReduc_CheckedChanged);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.Control;
             this.ClientSize = new System.Drawing.Size(1286, 771);
+            this.Controls.Add(this.checkBox_CV_VarReduc);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.checkBox_VarReduc);
             this.Controls.Add(this.textBox_Rho);
@@ -576,6 +589,7 @@
         private System.Windows.Forms.TextBox textBox_Rho;
         private System.Windows.Forms.CheckBox checkBox_VarReduc;
         private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.CheckBox checkBox_CV_VarReduc;
     }
 }
 

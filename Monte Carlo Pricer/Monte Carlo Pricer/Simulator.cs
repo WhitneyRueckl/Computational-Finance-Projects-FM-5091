@@ -26,7 +26,7 @@ namespace Monte_Carlo_Pricer
 
 
 
-        public double[] calcSimPrices(double S, double K, double r, double T, double drift, double vol, int trials, int n_steps, int put_call, double[,] rand)
+        public (double[] opt_prices, double[,] asset_prices) calcSimPrices(double S, double K, double r, double T, double drift, double vol, int trials, int n_steps, int put_call, double[,] rand)
         {
             // need to modify to get random numbers from the randm number generator - do later
 
@@ -55,9 +55,10 @@ namespace Monte_Carlo_Pricer
                 for (int j = 0; j < n_steps; j++)
                 {
 
-                    double randnum = rand[i, j];
+                    //double randnum = rand[i, j];
 
-                    assetSimPrices[i, j + 1] = assetSimPrices[i, j] * sde.GBM(delta_t, drift, vol, randnum);
+                    assetSimPrices[i, j + 1] = assetSimPrices[i, j] * sde.GBM(delta_t, drift, vol, rand[i, j]);
+
 
 
                 }
@@ -81,13 +82,13 @@ namespace Monte_Carlo_Pricer
 
             }
 
-            return optionPrices;
+            return (optionPrices, assetSimPrices);
 
         }
 
 
 
-            public double calcAverage(double[] valueArray, double trials)
+        public double calcAverage(double[] valueArray, double trials)
             {
                 double sum = 0;
 

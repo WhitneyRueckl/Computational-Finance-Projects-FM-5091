@@ -24,7 +24,7 @@ namespace Monte_Carlo_Pricer
 
             public double calcOptionPrice(double avgSimPrices, double K, double r, double T, int n_steps, int put_call)
             {
-
+                    //not average prices - fix name later
                 double payoff = calcPayoff(avgSimPrices, K, put_call);
 
                 double discfactor = Math.Pow(Math.E, -r * T);
@@ -36,8 +36,27 @@ namespace Monte_Carlo_Pricer
             }
 
 
+        //Overloaded calcOptionPrice method for control variate varianc reduction
+        public double calcOptionPrice(double avgSimPrices, double K, double r, double T, int n_steps, int put_call, double beta, double cv)
+        {
+            //not average prices - fix name later
+            double payoff = calcPayoff(avgSimPrices, K, put_call) + beta * cv;
 
-            public double calcPayoff(double avgSimPrices, double K, int put_call)
+            double discfactor = Math.Pow(Math.E, -r * T);
+            //double discfactor = calcDiscountFactor(r, T);
+            double option_px = payoff * discfactor;
+
+            return option_px;
+
+        }
+
+
+
+
+
+
+
+        public double calcPayoff(double avgSimPrices, double K, int put_call)
             {
                 // may want to add n_steps back in if want to see payoff at differente steps
                 //double[,] payoff = new double[2 * n_steps + 1, n_steps + 1];
@@ -63,8 +82,6 @@ namespace Monte_Carlo_Pricer
             }
 
       
-
-
         public double calcDiscountFactor(double r, double t)
             {
                 double delta_t = t;

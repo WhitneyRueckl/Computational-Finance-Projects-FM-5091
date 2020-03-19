@@ -34,6 +34,18 @@ namespace Monte_Carlo_Pricer
         Simulator sim = new Simulator();
 
 
+        /*
+        public double[,] getSimPaths(double S, double vol, double r, double T, int trials, int steps, double[,] rand)
+        {
+
+            double[,] paths = sim.calcSimPrices(S, K, r, T, drift, vol, trials, n_steps, put_call, rand);
+
+            return paths;
+
+        }
+            */
+
+
 
         public double calcDelta(double[,] rands, double[,] neg_rands)
         {
@@ -51,11 +63,11 @@ namespace Monte_Carlo_Pricer
 
             if (InputOutput.Var_Reduc == true)
             {
-                C1_arr = sim.calcSimPrices(S_up, K, r, T, drift, vol, trials, n_steps, put_call, rands);
-                C2_arr = sim.calcSimPrices(S_down, K, r, T, drift, vol, trials, n_steps, put_call, rands);
+                C1_arr = sim.calcSimPrices(S_up, K, r, T, drift, vol, trials, n_steps, put_call, rands).opt_prices;
+                C2_arr = sim.calcSimPrices(S_down, K, r, T, drift, vol, trials, n_steps, put_call, rands).opt_prices;
 
-                double[] negC1_arr = sim.calcSimPrices(S_up, K, r, T, drift, vol, trials, n_steps, put_call, neg_rands);
-                double[] negC2_arr = sim.calcSimPrices(S_down, K, r, T, drift, vol, trials, n_steps, put_call, neg_rands);
+                double[] negC1_arr = sim.calcSimPrices(S_up, K, r, T, drift, vol, trials, n_steps, put_call, neg_rands).opt_prices;
+                double[] negC2_arr = sim.calcSimPrices(S_down, K, r, T, drift, vol, trials, n_steps, put_call, neg_rands).opt_prices;
 
 
                 C1 = 0.5 * (sim.calcAverage(C1_arr, trials) + sim.calcAverage(negC1_arr, trials));
@@ -67,8 +79,8 @@ namespace Monte_Carlo_Pricer
             else
             {
 
-                C1_arr = sim.calcSimPrices(S_up, K, r, T, drift, vol, trials, n_steps, put_call, rands);
-                C2_arr = sim.calcSimPrices(S_down, K, r, T, drift, vol, trials, n_steps, put_call, rands);
+                C1_arr = sim.calcSimPrices(S_up, K, r, T, drift, vol, trials, n_steps, put_call, rands).opt_prices;
+                C2_arr = sim.calcSimPrices(S_down, K, r, T, drift, vol, trials, n_steps, put_call, rands).opt_prices;
 
                 C1 = sim.calcAverage(C1_arr, trials);
                 C2 = sim.calcAverage(C2_arr, trials);
@@ -101,13 +113,13 @@ namespace Monte_Carlo_Pricer
             if (InputOutput.Var_Reduc == true)
             {
 
-                C1_arr = sim.calcSimPrices(S_up, K, r, T, drift, vol, trials, n_steps, put_call, rands);
-                C2_arr = sim.calcSimPrices(S, K, r, T, drift, vol, trials, n_steps, put_call, rands);
-                C3_arr = sim.calcSimPrices(S_down, K, r, T, drift, vol, trials, n_steps, put_call, rands);
+                C1_arr = sim.calcSimPrices(S_up, K, r, T, drift, vol, trials, n_steps, put_call, rands).opt_prices;
+                C2_arr = sim.calcSimPrices(S, K, r, T, drift, vol, trials, n_steps, put_call, rands).opt_prices;
+                C3_arr = sim.calcSimPrices(S_down, K, r, T, drift, vol, trials, n_steps, put_call, rands).opt_prices;
 
-                double[] negC1_arr = sim.calcSimPrices(S_up, K, r, T, drift, vol, trials, n_steps, put_call, neg_rands);
-                double[] negC2_arr = sim.calcSimPrices(S, K, r, T, drift, vol, trials, n_steps, put_call, neg_rands);
-                double[] negC3_arr = sim.calcSimPrices(S_down, K, r, T, drift, vol, trials, n_steps, put_call, neg_rands);
+                double[] negC1_arr = sim.calcSimPrices(S_up, K, r, T, drift, vol, trials, n_steps, put_call, neg_rands).opt_prices;
+                double[] negC2_arr = sim.calcSimPrices(S, K, r, T, drift, vol, trials, n_steps, put_call, neg_rands).opt_prices;
+                double[] negC3_arr = sim.calcSimPrices(S_down, K, r, T, drift, vol, trials, n_steps, put_call, neg_rands).opt_prices;
 
                 C1 = 0.5 * (sim.calcAverage(C1_arr, trials) + sim.calcAverage(negC1_arr, trials));
                 C2 = 0.5 * (sim.calcAverage(C2_arr, trials) + sim.calcAverage(negC2_arr, trials));
@@ -118,9 +130,9 @@ namespace Monte_Carlo_Pricer
             }
             else
             {
-                C1_arr = sim.calcSimPrices(S_up, K, r, T, drift, vol, trials, n_steps, put_call, rands);
-                C2_arr = sim.calcSimPrices(S, K, r, T, drift, vol, trials, n_steps, put_call, rands);
-                C3_arr = sim.calcSimPrices(S_down, K, r, T, drift, vol, trials, n_steps, put_call, rands);
+                C1_arr = sim.calcSimPrices(S_up, K, r, T, drift, vol, trials, n_steps, put_call, rands).opt_prices;
+                C2_arr = sim.calcSimPrices(S, K, r, T, drift, vol, trials, n_steps, put_call, rands).opt_prices;
+                C3_arr = sim.calcSimPrices(S_down, K, r, T, drift, vol, trials, n_steps, put_call, rands).opt_prices;
 
 
                 C1 = sim.calcAverage(C1_arr, trials);
@@ -157,11 +169,11 @@ namespace Monte_Carlo_Pricer
 
             if (InputOutput.Var_Reduc == true)
             {
-                C1_arr = sim.calcSimPrices(S, K, r, T, drift, vol, trials, n_steps, put_call, rands);
-                C2_arr = sim.calcSimPrices(S, K, r, T_up, drift, vol, trials, n_steps, put_call, rands);
+                C1_arr = sim.calcSimPrices(S, K, r, T, drift, vol, trials, n_steps, put_call, rands).opt_prices;
+                C2_arr = sim.calcSimPrices(S, K, r, T_up, drift, vol, trials, n_steps, put_call, rands).opt_prices;
 
-                double[] negC1_arr = sim.calcSimPrices(S, K, r, T, drift, vol, trials, n_steps, put_call, neg_rands);
-                double[] negC2_arr = sim.calcSimPrices(S, K, r, T_up, drift, vol, trials, n_steps, put_call, neg_rands);
+                double[] negC1_arr = sim.calcSimPrices(S, K, r, T, drift, vol, trials, n_steps, put_call, neg_rands).opt_prices;
+                double[] negC2_arr = sim.calcSimPrices(S, K, r, T_up, drift, vol, trials, n_steps, put_call, neg_rands).opt_prices;
 
 
                 C1 = 0.5 * (sim.calcAverage(C1_arr, trials) + sim.calcAverage(negC1_arr, trials));
@@ -174,8 +186,8 @@ namespace Monte_Carlo_Pricer
             {
 
 
-                C1_arr = sim.calcSimPrices(S, K, r, T, drift, vol, trials, n_steps, put_call, rands);
-                C2_arr = sim.calcSimPrices(S, K, r, T_up, drift, vol, trials, n_steps, put_call, rands);
+                C1_arr = sim.calcSimPrices(S, K, r, T, drift, vol, trials, n_steps, put_call, rands).opt_prices;
+                C2_arr = sim.calcSimPrices(S, K, r, T_up, drift, vol, trials, n_steps, put_call, rands).opt_prices;
 
                 C1 = sim.calcAverage(C1_arr, trials);
                 C2 = sim.calcAverage(C2_arr, trials);
@@ -212,11 +224,11 @@ namespace Monte_Carlo_Pricer
             if (InputOutput.Var_Reduc == true)
             {
 
-                C1_arr = sim.calcSimPrices(S, K, r, T, drift, vol_up, trials, n_steps, put_call, rands);
-                C2_arr = sim.calcSimPrices(S, K, r, T, drift, vol_down, trials, n_steps, put_call, rands);
+                C1_arr = sim.calcSimPrices(S, K, r, T, drift, vol_up, trials, n_steps, put_call, rands).opt_prices;
+                C2_arr = sim.calcSimPrices(S, K, r, T, drift, vol_down, trials, n_steps, put_call, rands).opt_prices;
 
-                double[] negC1_arr = sim.calcSimPrices(S, K, r, T, drift, vol_up, trials, n_steps, put_call, neg_rands);
-                double[] negC2_arr = sim.calcSimPrices(S, K, r, T, drift, vol_down, trials, n_steps, put_call, neg_rands);
+                double[] negC1_arr = sim.calcSimPrices(S, K, r, T, drift, vol_up, trials, n_steps, put_call, neg_rands).opt_prices;
+                double[] negC2_arr = sim.calcSimPrices(S, K, r, T, drift, vol_down, trials, n_steps, put_call, neg_rands).opt_prices;
 
 
                 C1 = 0.5 * (sim.calcAverage(C1_arr, trials) + sim.calcAverage(negC1_arr, trials));
@@ -228,8 +240,8 @@ namespace Monte_Carlo_Pricer
             else
             {
 
-                C1_arr = sim.calcSimPrices(S, K, r, T, drift, vol_up, trials, n_steps, put_call, rands);
-                C2_arr = sim.calcSimPrices(S, K, r, T, drift, vol_down, trials, n_steps, put_call, rands);
+                C1_arr = sim.calcSimPrices(S, K, r, T, drift, vol_up, trials, n_steps, put_call, rands).opt_prices;
+                C2_arr = sim.calcSimPrices(S, K, r, T, drift, vol_down, trials, n_steps, put_call, rands).opt_prices;
 
                 C1 = sim.calcAverage(C1_arr, trials);
                 C2 = sim.calcAverage(C2_arr, trials);
@@ -261,11 +273,11 @@ namespace Monte_Carlo_Pricer
 
             if (InputOutput.Var_Reduc == true)
             {
-                C1_arr = sim.calcSimPrices(S, K, r_up, T, drift, vol, trials, n_steps, put_call, rands);
-                C2_arr = sim.calcSimPrices(S, K, r_up, T, drift, vol, trials, n_steps, put_call, rands);
+                C1_arr = sim.calcSimPrices(S, K, r_up, T, drift, vol, trials, n_steps, put_call, rands).opt_prices;
+                C2_arr = sim.calcSimPrices(S, K, r_up, T, drift, vol, trials, n_steps, put_call, rands).opt_prices;
 
-                double[] negC1_arr = sim.calcSimPrices(S, K, r_up, T, drift, vol, trials, n_steps, put_call, neg_rands);
-                double[] negC2_arr = sim.calcSimPrices(S, K, r_, T, drift, vol, trials, n_steps, put_call, neg_rands);
+                double[] negC1_arr = sim.calcSimPrices(S, K, r_up, T, drift, vol, trials, n_steps, put_call, neg_rands).opt_prices;
+                double[] negC2_arr = sim.calcSimPrices(S, K, r_down, T, drift, vol, trials, n_steps, put_call, neg_rands).opt_prices;
 
 
                 C1 = 0.5 * (sim.calcAverage(C1_arr, trials) + sim.calcAverage(negC1_arr, trials));
@@ -277,8 +289,8 @@ namespace Monte_Carlo_Pricer
             else
             {
 
-                C1_arr = sim.calcSimPrices(S, K, r_up, T, drift, vol, trials, n_steps, put_call, rands);
-                C2_arr = sim.calcSimPrices(S, K, r_down, T, drift, vol, trials, n_steps, put_call, rands);
+                C1_arr = sim.calcSimPrices(S, K, r_up, T, drift, vol, trials, n_steps, put_call, rands).opt_prices;
+                C2_arr = sim.calcSimPrices(S, K, r_down, T, drift, vol, trials, n_steps, put_call, rands).opt_prices;
 
                 C1 = sim.calcAverage(C1_arr, trials);
                 C2 = sim.calcAverage(C2_arr, trials);

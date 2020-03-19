@@ -17,6 +17,7 @@ namespace Monte_Carlo_Pricer
 
         }
 
+        // double randnum)
 
         // method to calc standard error
         public double calcStandardError(double[] prices, double[] antiprices, int trials)
@@ -55,7 +56,7 @@ namespace Monte_Carlo_Pricer
                 avg_dev = Math.Sqrt(sum_dev / (trials - 1));
 
             }
-            else
+            else if (InputOutput.Var_Reduc == false)
             {
 
                 // sum of simulated prices
@@ -78,6 +79,7 @@ namespace Monte_Carlo_Pricer
                 avg_dev = Math.Sqrt(sum_dev / (trials - 1));
 
             }
+            
 
 
             // std error

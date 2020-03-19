@@ -27,6 +27,7 @@ namespace Monte_Carlo_Pricer
 
             radioButton_Call.Checked = true;
             checkBox_VarReduc.Checked = true;
+            checkBox_CV_VarReduc.Checked = true;
         }
 
 
@@ -110,12 +111,31 @@ namespace Monte_Carlo_Pricer
                 InputOutput.Var_Reduc = true;
 
             }
-            else if (checkBox_VarReduc.Checked)
+            else //if (checkBox_VarReduc.Checked)
             {
                 InputOutput.Var_Reduc = false;
 
             }
 
+
+
+        }
+
+        private void checkBox_CV_VarReduc_CheckedChanged(object sender, EventArgs e)
+        {
+
+
+            if (checkBox_CV_VarReduc.Checked)
+            {
+
+                InputOutput.CV_Var_Reduc = true;
+
+            }
+            else //if (checkBox_CV_VarReduc.Checked)
+            {
+                InputOutput.CV_Var_Reduc = false;
+
+            }
 
 
         }

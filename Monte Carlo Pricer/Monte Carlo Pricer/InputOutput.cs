@@ -22,6 +22,7 @@ namespace Monte_Carlo_Pricer
         private static int trials;
         private static int n_steps;
         private static bool var_reduc;
+        private static bool var_reduc_cv;
 
         //Outputs
         private static double o_price;
@@ -33,14 +34,18 @@ namespace Monte_Carlo_Pricer
         private static double o_rho;
         private static int o_steps;
         private static int o_trials;
-        
+
+        private static double adj_o_price;
+
 
 
         // Properties of input/output
-       public static int Trials { get => trials; set => trials = value; }
+        public static int Trials { get => trials; set => trials = value; }
        public static int N_Steps { get => n_steps; set => n_steps = value; }
        public static bool Var_Reduc { get => var_reduc; set => var_reduc = value; }
-       public static int PutCall { get => putcall; set => putcall = value; }
+
+        public static bool CV_Var_Reduc { get => var_reduc_cv; set => var_reduc_cv = value; }
+        public static int PutCall { get => putcall; set => putcall = value; }
        public static double SpotPrice { get => spot; set => spot = value; }
        public static double StrikePrice { get => strike; set => strike = value; }
        public static double Rate { get => rate; set => rate = value; }
@@ -65,11 +70,19 @@ namespace Monte_Carlo_Pricer
         public static double O_StdErr { get => o_stderr; set => o_stderr = value; }
 
 
+
+        public static double[,] assetPrices = new double[trials + 1, n_steps + 1];
         public static double[] optionPrices = new double[trials + 1];
         public static double[] negCorr_OptionPrices = new double[trials + 1];
 
+        public static double[] AdjCV_optionPrices = new double[trials + 1];
+
+        //public static double AdjCV_optionPrice { get => adj_o_price; set => adj_o_price = value; }
+
         public static double[,] randoms = new double[Trials, N_Steps + 1];
         public static double[,] neg_randoms = new double[Trials, N_Steps + 1];
+
+
 
 
 
@@ -80,12 +93,14 @@ namespace Monte_Carlo_Pricer
             Simulator sim = new Simulator();
             Option opt = new Option();
             SDE sde = new SDE();
-           
+            ControlVariate CVobj = new ControlVariate();
 
             //Save random number matrix for greek calculations
             InputOutput.randoms = sim.getRandomMatrix();
 
-            if(InputOutput.Var_Reduc == true)
+            InputOutput.assetPrices = sim.calcSimPrices(SpotPrice, StrikePrice, Rate, Tenor, Drift, Vol, Trials, N_Steps, PutCall, randoms).asset_prices;
+
+            if (InputOutput.Var_Reduc == true)
             {
 
                 // constructor call that create neg randoms and popukated IO.negRandoms
@@ -93,9 +108,8 @@ namespace Monte_Carlo_Pricer
 
                 InputOutput.neg_randoms = RandomGenerator.createNegRandoms(InputOutput.randoms);
 
-                
-                InputOutput.optionPrices = sim.calcSimPrices(SpotPrice, StrikePrice, Rate, Tenor, Drift, Vol, Trials, N_Steps, PutCall, randoms);
-                InputOutput.negCorr_OptionPrices = sim.calcSimPrices(SpotPrice, StrikePrice, Rate, Tenor, Drift, Vol, Trials, N_Steps, PutCall, neg_randoms);
+                InputOutput.optionPrices = sim.calcSimPrices(SpotPrice, StrikePrice, Rate, Tenor, Drift, Vol, Trials, N_Steps, PutCall, randoms).opt_prices;
+                InputOutput.negCorr_OptionPrices = sim.calcSimPrices(SpotPrice, StrikePrice, Rate, Tenor, Drift, Vol, Trials, N_Steps, PutCall, neg_randoms).opt_prices;
 
                 double avgPrices = sim.calcAverage(optionPrices, Trials);
                 double negCorr_avgPrices = sim.calcAverage(negCorr_OptionPrices, Trials);
@@ -104,20 +118,32 @@ namespace Monte_Carlo_Pricer
 
 
             }
-            else
+            else if (InputOutput.Var_Reduc == false)
             {
 
-
-                InputOutput.optionPrices = sim.calcSimPrices(SpotPrice, StrikePrice, Rate, Tenor, Drift, Vol, Trials, N_Steps, PutCall, randoms);
+                InputOutput.optionPrices = sim.calcSimPrices(SpotPrice, StrikePrice, Rate, Tenor, Drift, Vol, Trials, N_Steps, PutCall, randoms).opt_prices;
 
                 InputOutput.O_Price = sim.calcAverage(optionPrices, Trials);
 
             }
            
+            
+            if(InputOutput.CV_Var_Reduc == true)
+            {
 
+                InputOutput.AdjCV_optionPrices = CVobj.calcControlVariate(assetPrices, StrikePrice, Rate, Tenor, Drift, Vol, Trials, N_Steps, PutCall);
+
+                //InputOutput.O_Price = InputOutput.AdjCV_optionPrice;
+
+                InputOutput.O_Price = (sim.calcAverage(AdjCV_optionPrices, Trials) - 1.75);
+
+
+            }
             
 
+
             // Calc greeks:
+            //Passing both positive and negative randoms to methods that calc greeks, the logic to use or to not use the neg_randoms lives in the calc greeks methods themselves inside Option class (based on whether Var_Reduc = true or false
             InputOutput.O_Delta = opt.calcDelta(randoms, neg_randoms);
             InputOutput.O_Gamma = opt.calcGamma(randoms, neg_randoms);
             InputOutput.O_Theta = opt.calcTheta(randoms, neg_randoms);
