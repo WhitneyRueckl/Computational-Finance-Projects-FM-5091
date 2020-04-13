@@ -31,7 +31,7 @@ namespace Monte_Carlo_Pricer
         int n_steps = InputOutput.N_Steps;
         int trials = InputOutput.Trials;
 
-        Simulator sim = new Simulator();
+        SimulatorParallel sim = new SimulatorParallel();
 
 
         /*
@@ -257,7 +257,8 @@ namespace Monte_Carlo_Pricer
 
         }
 
-
+        // Rho not calculating right...not sure why - other design 'Monte Carlo Pricer Rebuild
+        // does calculate rho correctly though
        public double calcRho(double[,] rands, double[,] neg_rands)
         {
             double delta_r = r * 0.001;
@@ -274,7 +275,7 @@ namespace Monte_Carlo_Pricer
             if (InputOutput.Var_Reduc == true)
             {
                 C1_arr = sim.calcSimPrices(S, K, r_up, T, drift, vol, trials, n_steps, put_call, rands).opt_prices;
-                C2_arr = sim.calcSimPrices(S, K, r_up, T, drift, vol, trials, n_steps, put_call, rands).opt_prices;
+                C2_arr = sim.calcSimPrices(S, K, r_down, T, drift, vol, trials, n_steps, put_call, rands).opt_prices;
 
                 double[] negC1_arr = sim.calcSimPrices(S, K, r_up, T, drift, vol, trials, n_steps, put_call, neg_rands).opt_prices;
                 double[] negC2_arr = sim.calcSimPrices(S, K, r_down, T, drift, vol, trials, n_steps, put_call, neg_rands).opt_prices;

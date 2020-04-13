@@ -30,7 +30,7 @@ namespace Monte_Carlo_Pricer
             //assetPrices, double K, double r, double T, int n_steps, int trials
             // double S, double K, double r, double T, double drift, double vol, int trials, int n_steps, int put_call, double[,] rand
 
-            Simulator sim = new Simulator();
+            //Simulator sim = new Simulator();
             NormalDist norm = new NormalDist();
             European euro = new European();
             SDE sde = new SDE();

@@ -60,6 +60,7 @@
     <Compile Include="Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
+    <Compile Include="IEnum.cs" />
     <Compile Include="InputOutput.cs" />
     <Compile Include="NormalDist.cs" />
     <Compile Include="Option.cs" />
@@ -68,6 +69,7 @@
     <Compile Include="RandomGenerator.cs" />
     <Compile Include="SDE.cs" />
     <Compile Include="Simulator.cs" />
+    <Compile Include="SimulatorParallel.cs" />
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
     </EmbeddedResource>

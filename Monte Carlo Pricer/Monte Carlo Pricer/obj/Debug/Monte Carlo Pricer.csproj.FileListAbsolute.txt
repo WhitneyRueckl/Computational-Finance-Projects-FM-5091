@@ -7,3 +7,4 @@ C:\Users\whitn\OneDrive\Documents\School\FM 5092\Projects\Monte Carlo Pricer\Mon
 C:\Users\whitn\OneDrive\Documents\School\FM 5092\Projects\Monte Carlo Pricer\Monte Carlo Pricer\obj\Debug\Monte Carlo Pricer.csproj.GenerateResource.cache
 C:\Users\whitn\OneDrive\Documents\School\FM 5092\Projects\Monte Carlo Pricer\Monte Carlo Pricer\obj\Debug\Monte Carlo Pricer.exe
 C:\Users\whitn\OneDrive\Documents\School\FM 5092\Projects\Monte Carlo Pricer\Monte Carlo Pricer\obj\Debug\Monte Carlo Pricer.pdb
+C:\Users\whitn\OneDrive\Documents\School\FM 5092\Projects\Monte Carlo Pricer\Monte Carlo Pricer\obj\Debug\Monte Carlo Pricer.csproj.CoreCompileInputs.cache

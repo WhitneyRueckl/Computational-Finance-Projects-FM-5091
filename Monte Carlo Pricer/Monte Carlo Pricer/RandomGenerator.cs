@@ -8,7 +8,7 @@ namespace Monte_Carlo_Pricer
 {
     public class RandomGenerator
     {
-        Random rand = new Random();
+         Random rand = new Random();
         //InputOutput IO = new InputOutput();
         
 
@@ -20,19 +20,25 @@ namespace Monte_Carlo_Pricer
 
 
         // Create matrix of random numbers:
-        public double[,] createRandoms()
+        public (double[,] randnums, double[,] neg_randnums) createRandoms()
         {
+            double[,] randnums = new double[trials + 1, steps + 1];
+            double[,] neg_randnums = new double[trials + 1, steps + 1];
 
-           for(long i = 0; i < trials; i++)
+            Parallel.ForEach(IEnum.Step(0, Convert.ToInt64(InputOutput.Trials), 1), new ParallelOptions { MaxDegreeOfParallelism = InputOutput.Num_Cores }, i =>
             {
-                for(long j = 0; j < steps; j++)
+                //Random rand = new Random();
+
+                for (long j = 0; j < steps; j++)
                 {
                     randnums[i, j] = NormRand_BoxMuller();
 
-                }
-            }
+                    neg_randnums[i, j] = randnums[i, j] * -1;
 
-            return randnums;
+                }
+            });
+
+            return (randnums, neg_randnums);
 
         }
 
@@ -41,7 +47,7 @@ namespace Monte_Carlo_Pricer
         private double NormRand_BoxMuller()
         {
 
-            var obj = new Object();
+            //var obj = new Object();
             double randnum1 = 0, randnum2 = 0;
 
 
@@ -79,27 +85,25 @@ namespace Monte_Carlo_Pricer
 
         }
 
-
         /*
-       public static void createNegRandoms()
-       {
+        // Create matrix of random numbers:
+        public double[,] createRandoms()
+        {
 
-           for (long i = 0; i < trials; i++)
-           {
-               for (long j = 0; j < steps; j++)
-               {
-                   //Console.WriteLine("random num " + IO.randoms[i, j]);
+            for (long i = 0; i < trials; i++)
+            {
+                for (long j = 0; j < steps; j++)
+                {
+                    randnums[i, j] = NormRand_BoxMuller();
 
-                   InputOutput.neg_randoms[i, j] = InputOutput.randoms[i, j] * -1;
+                }
+            }
 
-                   //Console.WriteLine("Neg randoms: " + IO.neg_randoms[i, j]);
+            return randnums;
 
-               }
-           }
+        }
+        */
 
-       }
-
-       */
 
 
     }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Diagnostics;
 
 namespace Monte_Carlo_Pricer
 {
@@ -23,6 +24,9 @@ namespace Monte_Carlo_Pricer
         private static int n_steps;
         private static bool var_reduc;
         private static bool var_reduc_cv;
+        private static bool multithread;
+        private static int num_cores;
+        private static TimeSpan timer;
 
         //Outputs
         private static double o_price;
@@ -41,10 +45,13 @@ namespace Monte_Carlo_Pricer
 
         // Properties of input/output
         public static int Trials { get => trials; set => trials = value; }
-       public static int N_Steps { get => n_steps; set => n_steps = value; }
-       public static bool Var_Reduc { get => var_reduc; set => var_reduc = value; }
+        public static int N_Steps { get => n_steps; set => n_steps = value; }
+        public static bool Var_Reduc { get => var_reduc; set => var_reduc = value; }
 
         public static bool CV_Var_Reduc { get => var_reduc_cv; set => var_reduc_cv = value; }
+
+        public static bool Multithread { get => multithread; set => multithread = value; }
+
         public static int PutCall { get => putcall; set => putcall = value; }
        public static double SpotPrice { get => spot; set => spot = value; }
        public static double StrikePrice { get => strike; set => strike = value; }
@@ -56,10 +63,9 @@ namespace Monte_Carlo_Pricer
        public static double Vol { get => vol; set => vol = value; }
        public static int OptionType { get => optiontype; set => optiontype = value; }
 
+        public static double O_Price { get => o_price; set => o_price = value; }
 
-       public static double O_Price { get => o_price; set => o_price = value; }
-
-       public static double O_Delta { get => o_delta; set => o_delta = value; }
+        public static double O_Delta { get => o_delta; set => o_delta = value; }
         public static double O_Gamma{ get => o_gamma; set => o_gamma = value; }
         public static double O_Vega { get => o_vega; set => o_vega = value; }
 
@@ -82,6 +88,10 @@ namespace Monte_Carlo_Pricer
         public static double[,] randoms = new double[Trials, N_Steps + 1];
         public static double[,] neg_randoms = new double[Trials, N_Steps + 1];
 
+        public static int Num_Cores { get => num_cores; set => num_cores = value; }
+
+        public static TimeSpan Timer { get => timer; set => timer = value; }
+
 
 
 
@@ -90,13 +100,21 @@ namespace Monte_Carlo_Pricer
         public static void getResults()
         {
 
-            Simulator sim = new Simulator();
+            Stopwatch watch = new Stopwatch();
+            watch.Start();
+
+            SimulatorParallel sim = new SimulatorParallel();
             Option opt = new Option();
             SDE sde = new SDE();
             ControlVariate CVobj = new ControlVariate();
+            RandomGenerator rnd = new RandomGenerator();
+
 
             //Save random number matrix for greek calculations
-            InputOutput.randoms = sim.getRandomMatrix();
+            //InputOutput.randoms = sim.getRandomMatrix();
+            InputOutput.randoms = rnd.createRandoms().randnums;
+            //InputOutput.neg_randoms = rnd.createRandoms().neg_randnums;
+
 
             InputOutput.assetPrices = sim.calcSimPrices(SpotPrice, StrikePrice, Rate, Tenor, Drift, Vol, Trials, N_Steps, PutCall, randoms).asset_prices;
 
@@ -153,6 +171,12 @@ namespace Monte_Carlo_Pricer
             // Calc std error:
             InputOutput.O_StdErr = sde.calcStandardError(optionPrices, negCorr_OptionPrices, Trials);
 
+
+            watch.Stop();
+            // Get the elapsed time as a TimeSpan value.
+            TimeSpan runtime = watch.Elapsed;
+
+            InputOutput.Timer = runtime;
 
 
             //InputOutput.O_Price = sim.calcSimPrices(50, 60, .05, 1, .05, 0.5, 10, 3, 0);
