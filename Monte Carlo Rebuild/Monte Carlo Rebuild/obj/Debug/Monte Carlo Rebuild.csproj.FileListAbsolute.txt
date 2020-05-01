@@ -1,0 +1,9 @@
+C:\Users\whitn\OneDrive\Documents\School\FM 5092\Projects\Monte Carlo Rebuild\Monte Carlo Rebuild\obj\Debug\Monte Carlo Rebuild.csprojAssemblyReference.cache
+C:\Users\whitn\OneDrive\Documents\School\FM 5092\Projects\Monte Carlo Rebuild\Monte Carlo Rebuild\obj\Debug\Monte Carlo Rebuild.csproj.CoreCompileInputs.cache
+C:\Users\whitn\OneDrive\Documents\School\FM 5092\Projects\Monte Carlo Rebuild\Monte Carlo Rebuild\bin\Debug\Monte Carlo Rebuild.exe.config
+C:\Users\whitn\OneDrive\Documents\School\FM 5092\Projects\Monte Carlo Rebuild\Monte Carlo Rebuild\bin\Debug\Monte Carlo Rebuild.exe
+C:\Users\whitn\OneDrive\Documents\School\FM 5092\Projects\Monte Carlo Rebuild\Monte Carlo Rebuild\bin\Debug\Monte Carlo Rebuild.pdb
+C:\Users\whitn\OneDrive\Documents\School\FM 5092\Projects\Monte Carlo Rebuild\Monte Carlo Rebuild\obj\Debug\Monte Carlo Rebuild.exe
+C:\Users\whitn\OneDrive\Documents\School\FM 5092\Projects\Monte Carlo Rebuild\Monte Carlo Rebuild\obj\Debug\Monte Carlo Rebuild.pdb
+C:\Users\whitn\OneDrive\Documents\School\FM 5092\Projects\Monte Carlo Rebuild\Monte Carlo Rebuild\obj\Debug\Monte_Carlo_Rebuild.Form1.resources
+C:\Users\whitn\OneDrive\Documents\School\FM 5092\Projects\Monte Carlo Rebuild\Monte Carlo Rebuild\obj\Debug\Monte Carlo Rebuild.csproj.GenerateResource.cache
