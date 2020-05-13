@@ -1,0 +1,299 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="PortfolioDataModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2012" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityContainer Name="PortfolioDataModelStoreContainer">
+    <EntitySet Name="BarrierTypes" EntityType="PortfolioDataModel.Store.BarrierTypes" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="InstrumentTypes" EntityType="PortfolioDataModel.Store.InstrumentTypes" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="InterestRates" EntityType="PortfolioDataModel.Store.InterestRates" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Trades" EntityType="PortfolioDataModel.Store.Trades" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Instruments" EntityType="PortfolioDataModel.Store.Instruments" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Prices" EntityType="PortfolioDataModel.Store.Prices" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Instruments_BarrierOption" EntityType="PortfolioDataModel.Store.Instruments_BarrierOption" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Instruments_RangeOption" EntityType="PortfolioDataModel.Store.Instruments_RangeOption" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Instruments_DigitalOption" EntityType="PortfolioDataModel.Store.Instruments_DigitalOption" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Instruments_AsianOption" EntityType="PortfolioDataModel.Store.Instruments_AsianOption" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Instruments_LookbackOption" EntityType="PortfolioDataModel.Store.Instruments_LookbackOption" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Instruments_EuropeanOption" EntityType="PortfolioDataModel.Store.Instruments_EuropeanOption" store:Type="Tables" Schema="dbo" />
+    <AssociationSet Name="BarrierTypeBarrierOption" Association="PortfolioDataModel.Store.BarrierTypeBarrierOption">
+      <End Role="BarrierType" EntitySet="BarrierTypes" />
+      <End Role="BarrierOption" EntitySet="Instruments_BarrierOption" />
+    </AssociationSet>
+    <AssociationSet Name="InstrumentTypeInstrument" Association="PortfolioDataModel.Store.InstrumentTypeInstrument">
+      <End Role="InstrumentType" EntitySet="InstrumentTypes" />
+      <End Role="Instrument" EntitySet="Instruments" />
+    </AssociationSet>
+    <AssociationSet Name="InstrumentTrades" Association="PortfolioDataModel.Store.InstrumentTrades">
+      <End Role="Instrument" EntitySet="Instruments" />
+      <End Role="Trades" EntitySet="Trades" />
+    </AssociationSet>
+    <AssociationSet Name="InstrumentPrices" Association="PortfolioDataModel.Store.InstrumentPrices">
+      <End Role="Instrument" EntitySet="Instruments" />
+      <End Role="Prices" EntitySet="Prices" />
+    </AssociationSet>
+    <AssociationSet Name="FK_BarrierOption_inherits_Instrument" Association="PortfolioDataModel.Store.FK_BarrierOption_inherits_Instrument">
+      <End Role="Instrument" EntitySet="Instruments" />
+      <End Role="BarrierOption" EntitySet="Instruments_BarrierOption" />
+    </AssociationSet>
+    <AssociationSet Name="FK_RangeOption_inherits_Instrument" Association="PortfolioDataModel.Store.FK_RangeOption_inherits_Instrument">
+      <End Role="Instrument" EntitySet="Instruments" />
+      <End Role="RangeOption" EntitySet="Instruments_RangeOption" />
+    </AssociationSet>
+    <AssociationSet Name="FK_DigitalOption_inherits_Instrument" Association="PortfolioDataModel.Store.FK_DigitalOption_inherits_Instrument">
+      <End Role="Instrument" EntitySet="Instruments" />
+      <End Role="DigitalOption" EntitySet="Instruments_DigitalOption" />
+    </AssociationSet>
+    <AssociationSet Name="FK_AsianOption_inherits_Instrument" Association="PortfolioDataModel.Store.FK_AsianOption_inherits_Instrument">
+      <End Role="Instrument" EntitySet="Instruments" />
+      <End Role="AsianOption" EntitySet="Instruments_AsianOption" />
+    </AssociationSet>
+    <AssociationSet Name="FK_LookbackOption_inherits_Instrument" Association="PortfolioDataModel.Store.FK_LookbackOption_inherits_Instrument">
+      <End Role="Instrument" EntitySet="Instruments" />
+      <End Role="LookbackOption" EntitySet="Instruments_LookbackOption" />
+    </AssociationSet>
+    <AssociationSet Name="FK_EuropeanOption_inherits_Instrument" Association="PortfolioDataModel.Store.FK_EuropeanOption_inherits_Instrument">
+      <End Role="Instrument" EntitySet="Instruments" />
+      <End Role="EuropeanOption" EntitySet="Instruments_EuropeanOption" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="BarrierTypes">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="BarrierTypeName" Type="nvarchar(max)" Nullable="false" />
+  </EntityType>
+  <EntityType Name="InstrumentTypes">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="TypeName" Type="nvarchar(max)" Nullable="false" />
+  </EntityType>
+  <EntityType Name="InterestRates">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Tenor" Type="int" Nullable="false" />
+    <Property Name="Rate" Type="float" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Trades">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="IsBuy" Type="bit" Nullable="false" />
+    <Property Name="Ticker" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Quantity" Type="int" Nullable="false" />
+    <Property Name="TradePrice" Type="float" Nullable="false" />
+    <Property Name="TradeDate" Type="datetime" Nullable="false" />
+    <Property Name="InstrumentId" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Instruments">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="CompanyName" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Ticker" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Exchange" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="InstrumentTypeId" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Prices">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="AsOfDate" Type="datetime" Nullable="false" />
+    <Property Name="ClosingPrice" Type="float" Nullable="false" />
+    <Property Name="InstrumentId" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Instruments_BarrierOption">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Strike" Type="float" Nullable="false" />
+    <Property Name="Tenor" Type="int" Nullable="false" />
+    <Property Name="IsPut" Type="bit" Nullable="false" />
+    <Property Name="BarrierLevel" Type="float" Nullable="false" />
+    <Property Name="BarrierTypeId" Type="int" Nullable="false" />
+    <Property Name="Id" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Instruments_RangeOption">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Strike" Type="float" Nullable="false" />
+    <Property Name="Tenor" Type="int" Nullable="false" />
+    <Property Name="IsPut" Type="bit" Nullable="false" />
+    <Property Name="Id" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Instruments_DigitalOption">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Strike" Type="float" Nullable="false" />
+    <Property Name="Tenor" Type="int" Nullable="false" />
+    <Property Name="IsPut" Type="bit" Nullable="false" />
+    <Property Name="Rebate" Type="float" Nullable="false" />
+    <Property Name="Id" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Instruments_AsianOption">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Strike" Type="float" Nullable="false" />
+    <Property Name="Tenor" Type="int" Nullable="false" />
+    <Property Name="IsPut" Type="bit" Nullable="false" />
+    <Property Name="Id" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Instruments_LookbackOption">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Strike" Type="float" Nullable="false" />
+    <Property Name="Tenor" Type="int" Nullable="false" />
+    <Property Name="IsPut" Type="bit" Nullable="false" />
+    <Property Name="Id" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Instruments_EuropeanOption">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Strike" Type="float" Nullable="false" />
+    <Property Name="Tenor" Type="int" Nullable="false" />
+    <Property Name="IsPut" Type="bit" Nullable="false" />
+    <Property Name="Id" Type="int" Nullable="false" />
+  </EntityType>
+  <Association Name="BarrierTypeBarrierOption">
+    <End Role="BarrierType" Type="PortfolioDataModel.Store.BarrierTypes" Multiplicity="1" />
+    <End Role="BarrierOption" Type="PortfolioDataModel.Store.Instruments_BarrierOption" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="BarrierType">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="BarrierOption">
+        <PropertyRef Name="BarrierTypeId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="InstrumentTypeInstrument">
+    <End Role="InstrumentType" Type="PortfolioDataModel.Store.InstrumentTypes" Multiplicity="1" />
+    <End Role="Instrument" Type="PortfolioDataModel.Store.Instruments" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="InstrumentType">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Instrument">
+        <PropertyRef Name="InstrumentTypeId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="InstrumentTrades">
+    <End Role="Instrument" Type="PortfolioDataModel.Store.Instruments" Multiplicity="1" />
+    <End Role="Trades" Type="PortfolioDataModel.Store.Trades" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Instrument">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Trades">
+        <PropertyRef Name="InstrumentId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="InstrumentPrices">
+    <End Role="Instrument" Type="PortfolioDataModel.Store.Instruments" Multiplicity="1" />
+    <End Role="Prices" Type="PortfolioDataModel.Store.Prices" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Instrument">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Prices">
+        <PropertyRef Name="InstrumentId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_BarrierOption_inherits_Instrument">
+    <End Role="Instrument" Type="PortfolioDataModel.Store.Instruments" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="BarrierOption" Type="PortfolioDataModel.Store.Instruments_BarrierOption" Multiplicity="0..1" />
+    <ReferentialConstraint>
+      <Principal Role="Instrument">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="BarrierOption">
+        <PropertyRef Name="Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_RangeOption_inherits_Instrument">
+    <End Role="Instrument" Type="PortfolioDataModel.Store.Instruments" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="RangeOption" Type="PortfolioDataModel.Store.Instruments_RangeOption" Multiplicity="0..1" />
+    <ReferentialConstraint>
+      <Principal Role="Instrument">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="RangeOption">
+        <PropertyRef Name="Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_DigitalOption_inherits_Instrument">
+    <End Role="Instrument" Type="PortfolioDataModel.Store.Instruments" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="DigitalOption" Type="PortfolioDataModel.Store.Instruments_DigitalOption" Multiplicity="0..1" />
+    <ReferentialConstraint>
+      <Principal Role="Instrument">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="DigitalOption">
+        <PropertyRef Name="Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_AsianOption_inherits_Instrument">
+    <End Role="Instrument" Type="PortfolioDataModel.Store.Instruments" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="AsianOption" Type="PortfolioDataModel.Store.Instruments_AsianOption" Multiplicity="0..1" />
+    <ReferentialConstraint>
+      <Principal Role="Instrument">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="AsianOption">
+        <PropertyRef Name="Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_LookbackOption_inherits_Instrument">
+    <End Role="Instrument" Type="PortfolioDataModel.Store.Instruments" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="LookbackOption" Type="PortfolioDataModel.Store.Instruments_LookbackOption" Multiplicity="0..1" />
+    <ReferentialConstraint>
+      <Principal Role="Instrument">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="LookbackOption">
+        <PropertyRef Name="Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_EuropeanOption_inherits_Instrument">
+    <End Role="Instrument" Type="PortfolioDataModel.Store.Instruments" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="EuropeanOption" Type="PortfolioDataModel.Store.Instruments_EuropeanOption" Multiplicity="0..1" />
+    <ReferentialConstraint>
+      <Principal Role="Instrument">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="EuropeanOption">
+        <PropertyRef Name="Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema>
