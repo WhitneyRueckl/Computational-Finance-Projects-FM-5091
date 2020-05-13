@@ -1,0 +1,4 @@
+Id,Ticker,InstrumentType,SpotPrice,StrikePrice,Tenor,Rate
+1,AAPL,EuropeanOption,300,305,1,0.05
+2,FB,AsianOption,200,210,1,0.05
+3,NVDA,EuropeanOption,310,320,1,0.05

@@ -1,0 +1,16 @@
+CompanyName,Ticker,Exchange,InstrumentTypeId
+Apple Inc. ,AAPL,NASDAQ,14
+NVIDIA Corporation ,NVDA,NASDAQ,14
+The Trade Desk Inc.,TTD,NASDAQ,14
+Facebook Inc. ,FB,NASDAQ,14
+Amazon.com Inc. ,AMZN,NASDAQ,14
+Apple Inc. ,AAPLC,NASDAQ,15
+NVIDIA Corporation ,NVDAC,NASDAQ,15
+The Trade Desk Inc.,TTDC,NASDAQ,15
+Facebook Inc. ,FBC,NASDAQ,15
+Amazon.com Inc. ,AMZNC,NASDAQ,15
+Apple Inc. ,AAPLP,NASDAQ,15
+NVIDIA Corporation ,NVDAP,NASDAQ,15
+The Trade Desk Inc.,TTDP,NASDAQ,15
+Facebook Inc. ,FBP,NASDAQ,15
+Amazon.com Inc. ,AMZNP,NASDAQ,15
